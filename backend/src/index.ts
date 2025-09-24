@@ -4,7 +4,6 @@ dotenv.config(); // Load environment variables from .env file
 import express from "express";
 import { serve } from "inngest/express";
 import { inngest } from "./inngest";
-// import { functions as inngestFunctions } from "./inngest/functions";
 import { functions as inngestFunctions } from "./inngest/index";
 import { logger } from "./utils/logger";
 import { connectDB } from "./utils/db";
@@ -21,7 +20,15 @@ const app = express();
 
 // Middlewares
 // Enable CORS(Cross Origin Resource Sharing) for all incoming requests
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://ai-therapist-agent-mea.vercel.app/",
+      "http://localhost:3000",
+    ],
+    credentials: true,
+  })
+);
 
 // Security middleware to set various HTTP headers for app security
 app.use(helmet());
@@ -38,8 +45,8 @@ app.use(
   serve({ client: inngest, functions: inngestFunctions })
 );
 
-app.use("/auth", authRoutes);
-app.use("/chat", chatRouter);
+app.use("/api/auth", authRoutes);
+app.use("/api/chat", chatRouter);
 app.use("/api/mood", moodRouter);
 app.use("/api/activity", activityRouter);
 
