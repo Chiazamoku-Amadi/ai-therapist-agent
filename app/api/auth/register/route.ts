@@ -3,11 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 // Register Request
 export async function POST(request: NextRequest) {
   const body = await request.json(); // Request body
-  const API_URL = process.env.API_URL || "http://localhost:3001"; // API url
+  const BACKEND_API_URL =
+    process.env.BACKEND_API_URL || "http://localhost:3001"; // API url
 
   try {
     // Initiate a POST request to the auth login route
-    const res = await fetch(`${API_URL}/auth/register`, {
+    const res = await fetch(`${BACKEND_API_URL}/api/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -13,7 +13,7 @@ interface MoodFormProps {
   onSuccess?: () => void;
 }
 
-const API_URL = process.env.API_URL || "http://localhost:3001"; // API url
+const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001"; // API url
 
 const MoodForm = ({ onSuccess }: MoodFormProps) => {
   const [moodScore, setMoodScore] = useState(50);
@@ -49,10 +49,14 @@ const MoodForm = ({ onSuccess }: MoodFormProps) => {
         token ? "exists" : "not found"
       );
 
-      const response = await authenticatedFetch(`${API_URL}/api/mood`, router, {
-        method: "POST",
-        body: JSON.stringify({ score: moodScore }),
-      });
+      const response = await authenticatedFetch(
+        `${BACKEND_API_URL}/api/mood`,
+        router,
+        {
+          method: "POST",
+          body: JSON.stringify({ score: moodScore }),
+        }
+      );
 
       if (!response.ok) {
         const error = await response.json();

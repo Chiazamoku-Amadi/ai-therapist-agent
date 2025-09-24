@@ -13,7 +13,7 @@ export async function GET(
 
     // Fetch chat session history using the session ID
     const response = await fetch(
-      `${BACKEND_API_URL}/chat/sessions/${sessionId}/history`
+      `${BACKEND_API_URL}/api/chat/sessions/${sessionId}/history`
     );
 
     // If not successful, an error is thrown
@@ -53,7 +53,7 @@ export async function POST(
 
     // Send POST request to create the new message
     const response = await fetch(
-      `${BACKEND_API_URL}/chat/sessions/${sessionId}/messages`,
+      `${BACKEND_API_URL}/api/chat/sessions/${sessionId}/messages`,
       {
         method: "POST",
         headers: {

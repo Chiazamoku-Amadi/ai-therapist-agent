@@ -23,7 +23,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://ai-therapist-agent-mea.vercel.app/",
+      "https://ai-therapist-agent-mea.vercel.app",
       "http://localhost:3000",
     ],
     credentials: true,

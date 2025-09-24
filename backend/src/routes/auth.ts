@@ -4,16 +4,16 @@ import { auth } from "../middleware/auth";
 
 const router = Router();
 
-// Register a new user - POST /auth/register
+// Register a new user - POST /api/auth/register
 router.post("/register", register);
 
-// User login - POST /auth/login
+// User login - POST /api/auth/login
 router.post("/login", login);
 
-// User logout - POST /auth/logout
+// User logout - POST /api/auth/logout
 router.post("/logout", auth, logout);
 
-// Get current authenticated user - GET /auth/me
+// Get current authenticated user - GET /api/auth/me
 router.get("/me", auth, (req, res) => {
   res.json({ user: req.user });
 });

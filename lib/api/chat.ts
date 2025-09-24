@@ -41,7 +41,7 @@ export interface ApiResponse {
   };
 }
 
-const API_BASE = process.env.API_URL || "http://localhost:3001";
+const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 
 // Helper function to get auth headers
 const getAuthHeaders = () => {
@@ -56,7 +56,7 @@ const getAuthHeaders = () => {
 // To create a new chat session
 export const createChatSession = async (): Promise<string> => {
   try {
-    const response = await fetch(`${API_BASE}/chat/sessions`, {
+    const response = await fetch(`${BACKEND_API_URL}/api/chat/sessions`, {
       method: "POST",
       headers: getAuthHeaders(),
     });
@@ -82,7 +82,7 @@ export const sendChatMessage = async (
 ): Promise<ApiResponse> => {
   try {
     const response = await fetch(
-      `${API_BASE}/chat/sessions/${sessionId}/messages`,
+      `${BACKEND_API_URL}/api/chat/sessions/${sessionId}/messages`,
       {
         method: "POST",
         headers: getAuthHeaders(),
@@ -110,7 +110,7 @@ export const getChatHistory = async (
 ): Promise<ChatMessage[]> => {
   try {
     const response = await fetch(
-      `${API_BASE}/chat/sessions/${sessionId}/history`,
+      `${BACKEND_API_URL}/api/chat/sessions/${sessionId}/history`,
       {
         headers: getAuthHeaders(),
       }
@@ -146,7 +146,7 @@ export const getChatHistory = async (
 // Get all chat sessions
 export const getAllChatSessions = async (): Promise<ChatSession[]> => {
   try {
-    const response = await fetch(`${API_BASE}/chat/sessions`, {
+    const response = await fetch(`${BACKEND_API_URL}/api/chat/sessions`, {
       headers: getAuthHeaders(),
     });
 

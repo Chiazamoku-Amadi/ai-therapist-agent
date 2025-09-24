@@ -12,7 +12,7 @@ export async function GET(
     const { sessionId } = await context.params; // 👈 must await because it's a Promise now
 
     const response = await fetch(
-      `${BACKEND_API_URL}/chat/sessions/${sessionId}/history`,
+      `${BACKEND_API_URL}/api/chat/sessions/${sessionId}/history`,
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
