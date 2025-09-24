@@ -5,11 +5,11 @@ const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 // Fetches chat session history
 export async function GET(
   req: NextRequest,
-  { params }: { params: { sessionId: string } }
+  { params }: { params: Promise<{ sessionId: string }> }
 ) {
   try {
     // Extract session ID
-    const { sessionId } = params;
+    const { sessionId } = await params;
 
     // Fetch chat session history using the session ID
     const response = await fetch(
@@ -28,7 +28,7 @@ export async function GET(
     console.error("Error in chat history API:", error);
 
     return NextResponse.json(
-      { error: "Faled to fetch chat history" },
+      { error: "Failed to fetch chat history" },
       { status: 500 }
     );
   }
@@ -37,13 +37,13 @@ export async function GET(
 // For adding a new message
 export async function POST(
   req: NextRequest,
-  { params }: { params: { sessionId: string } }
+  { params }: { params: Promise<{ sessionId: string }> }
 ) {
   try {
-    const { sessionId } = params; // Extract sessionId from params
+    const { sessionId } = await params; // Extract sessionId from params
     const { message } = await req.json(); // Extract message from the request body
 
-    // I no message, return an error
+    // If no message, return an error
     if (!message) {
       return NextResponse.json(
         { error: "Message is required" },
@@ -75,7 +75,7 @@ export async function POST(
     console.error("Error in chat API:", error);
 
     return NextResponse.json(
-      { error: "Faled to process chat message" },
+      { error: "Failed to process chat message" },
       { status: 500 }
     );
   }

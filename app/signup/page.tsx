@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export const Signup = () => {
+export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -188,6 +188,4 @@ export const Signup = () => {
       </Container>
     </div>
   );
-};
-
-export default Signup;
+}
