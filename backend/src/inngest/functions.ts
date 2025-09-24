@@ -1,5 +1,4 @@
 import { inngest } from "./client";
-import { toast } from "sonner";
 
 // Function to handle therapy session events
 export const therapySessionHandler = inngest.createFunction(
@@ -8,7 +7,10 @@ export const therapySessionHandler = inngest.createFunction(
   async ({ event, step }) => {
     // Log the session creation
     await step.run("log-session-creation", async () => {
-      toast("New therapy session created");
+      console.log(
+        "New therapy session created for user:",
+        event.data.sessionId
+      );
     });
 
     // Process the session data
@@ -23,7 +25,7 @@ export const therapySessionHandler = inngest.createFunction(
     // Send follow-up notification if needed
     if (event.data.requiresFollowUp) {
       await step.run("send-follow-up", async () => {
-        toast("Follow-up needed for session: " + event.data.sessionId);
+        console.log("Follow-up needed for session:", event.data.sessionId);
       });
     }
 
@@ -42,7 +44,7 @@ export const moodTrackingHandler = inngest.createFunction(
   async ({ event, step }) => {
     // Log the mood update
     await step.run("log-mood-update", async () => {
-      toast("Mood updated to: " + event.data.mood);
+      console.log("Mood updated to:", event.data.mood);
     });
 
     // Analyze mood patterns
@@ -58,7 +60,7 @@ export const moodTrackingHandler = inngest.createFunction(
     if (event.data.mood < 3) {
       // Assuming mood is on a scale of 1-5
       await step.run("trigger-alert", async () => {
-        toast("Alert: Concerning mood detected!");
+        console.log("Alert: Concerning mood detected!");
       });
     }
 
@@ -76,7 +78,7 @@ export const activityCompletionHandler = inngest.createFunction(
   async ({ step }) => {
     // Log the activity completion
     await step.run("log-activity-completion", async () => {
-      toast("Great job on completing your activity!");
+      console.log("Great job on completing your activity!");
     });
 
     // Update user progress
