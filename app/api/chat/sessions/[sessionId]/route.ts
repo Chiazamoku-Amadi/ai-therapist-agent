@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const API_URL = process.env.API_URL || "http://localhost:3001";
+const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 
 // Fetches chat session history
 export async function GET(
@@ -13,7 +13,7 @@ export async function GET(
 
     // Fetch chat session history using the session ID
     const response = await fetch(
-      `${API_URL}/chat/sessions/${sessionId}/history`
+      `${BACKEND_API_URL}/chat/sessions/${sessionId}/history`
     );
 
     // If not successful, an error is thrown
@@ -53,7 +53,7 @@ export async function POST(
 
     // Send POST request to create the new message
     const response = await fetch(
-      `${API_URL}/chat/sessions/${sessionId}/messages`,
+      `${BACKEND_API_URL}/chat/sessions/${sessionId}/messages`,
       {
         method: "POST",
         headers: {

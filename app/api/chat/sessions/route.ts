@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const API_URL = process.env.API_URL || "http://localhost:3001";
+const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 
 // Chat Session Request Function
 export async function POST(req: NextRequest) {
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const response = await fetch(`${API_URL}/chat/sessions`, {
+    const response = await fetch(`${BACKEND_API_URL}/chat/sessions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
