@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
+const BACKEND_API_URL =
+  process.env.NEXT_PUBLIC_BACKEND_API_URL || "http://localhost:3001";
 
 // Fetches chat session history
 export async function GET(
@@ -11,14 +12,35 @@ export async function GET(
     // Extract session ID
     const { sessionId } = await params;
 
+    // Extract token from request
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: "Authorization header required" },
+        { status: 401 }
+      );
+    }
+
     // Fetch chat session history using the session ID
     const response = await fetch(
-      `${BACKEND_API_URL}/api/chat/sessions/${sessionId}/history`
+      `${BACKEND_API_URL}/api/chat/sessions/${sessionId}/history`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: authHeader,
+        },
+      }
     );
 
     // If not successful, an error is thrown
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      const error = await response.json();
+      console.error("Failed to fetch chat history:", error);
+      return NextResponse.json(
+        { error: error.error || "Failed to fetch chat history" },
+        { status: response.status }
+      );
     }
 
     // If successful, return the data as JSON
@@ -51,6 +73,15 @@ export async function POST(
       );
     }
 
+    // Extract token
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: "Authorization header required" },
+        { status: 401 }
+      );
+    }
+
     // Send POST request to create the new message
     const response = await fetch(
       `${BACKEND_API_URL}/api/chat/sessions/${sessionId}/messages`,
@@ -58,6 +89,7 @@ export async function POST(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: authHeader,
         },
         body: JSON.stringify({ message }),
       }
@@ -65,7 +97,12 @@ export async function POST(
 
     // If response is not successful, throw an error
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      const error = await response.json();
+      console.error("Failed to send message:", error);
+      return NextResponse.json(
+        { error: error.error || "Failed to send message" },
+        { status: response.status }
+      );
     }
 
     // If response is successful, return the data as JSON

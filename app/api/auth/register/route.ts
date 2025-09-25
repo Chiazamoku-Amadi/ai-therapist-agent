@@ -4,10 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   const body = await request.json(); // Request body
   const BACKEND_API_URL =
-    process.env.BACKEND_API_URL || "http://localhost:3001"; // API url
+    process.env.NEXT_PUBLIC_BACKEND_API_URL || "http://localhost:3001"; // API url
 
   try {
-    // Initiate a POST request to the auth login route
+    // Initiate a POST request to the auth register route
     const res = await fetch(`${BACKEND_API_URL}/api/auth/register`, {
       method: "POST",
       headers: {

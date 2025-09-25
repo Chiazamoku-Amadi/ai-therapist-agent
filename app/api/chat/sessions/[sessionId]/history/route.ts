@@ -1,21 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ChatMessage } from "../../../../../../lib/api/chat";
 
-const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
+const BACKEND_API_URL =
+  process.env.NEXT_PUBLIC_BACKEND_API_URL || "http://localhost:3001";
 
 // GET /api/chat/sessions/[sessionId]/history
 export async function GET(
   req: NextRequest,
-  context: { params: Promise<{ sessionId: string }> } // 👈 updated type
+  context: { params: Promise<{ sessionId: string }> }
 ) {
   try {
-    const { sessionId } = await context.params; // 👈 must await because it's a Promise now
+    const { sessionId } = await context.params;
+
+    // Pull token from the incoming request
+    const authHeader = req.headers.get("Authorization");
+
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: "Authorization header required" },
+        { status: 401 }
+      );
+    }
 
     const response = await fetch(
       `${BACKEND_API_URL}/api/chat/sessions/${sessionId}/history`,
       {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: authHeader,
+        },
       }
     );
 

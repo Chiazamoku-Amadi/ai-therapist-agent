@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 // For retrieving user details including authentication token
 export async function GET(req: NextRequest) {
   const BACKEND_API_URL =
-    process.env.BACKEND_BACKEND_API_URL || "http://localhost:3001";
+    process.env.NEXT_PUBLIC_BACKEND_API_URL || "http://localhost:3001";
 
   const token = req.headers.get("Authorization");
 

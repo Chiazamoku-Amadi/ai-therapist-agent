@@ -13,7 +13,6 @@ export default function ClientLayout({
 }) {
   return (
     <Providers>
-      {/* AuthGuard is now inside the Providers and can use the context */}
       <AuthGuard />
 
       {/* Header */}

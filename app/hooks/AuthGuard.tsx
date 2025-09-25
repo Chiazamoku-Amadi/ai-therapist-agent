@@ -1,20 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "@/lib/contexts/session-context";
 
-export function AuthGuard() {
-  // Use the loading state to wait for the session check to complete.
+export function AuthGuard({ children }: { children?: React.ReactNode }) {
   const { user, loading } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
+
+  // Public routes (no auth required)
+  const publicRoutes = ["/", "/login", "/signup"];
 
   useEffect(() => {
-    // Only run the redirect logic after the session check is finished.
-    if (!loading && !user) {
+    if (!loading && !user && !publicRoutes.includes(pathname)) {
       router.push("/login");
     }
-  }, [loading, user, router]);
+  }, [loading, user, pathname, router]);
 
-  return null; // This component doesn't render anything
+  // While checking, you might want to show a spinner instead of nothing
+  if (loading) return <p>Loading...</p>;
+
+  // Only render children if authenticated
+  return <>{children}</>;
 }

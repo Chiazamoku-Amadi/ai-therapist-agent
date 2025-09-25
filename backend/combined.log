@@ -2072,3 +2072,14 @@
 {"level":"info","message":"Fetched 0 activities for user 68caa1584c7758c290b3b43c today","timestamp":"2025-09-24T16:25:25.264Z"}
 {"level":"info","message":"Fetched 0 activities for user 68caa1584c7758c290b3b43c today","timestamp":"2025-09-24T16:30:25.421Z"}
 {"level":"info","message":"Fetched 0 activities for user 68caa1584c7758c290b3b43c today","timestamp":"2025-09-24T16:35:26.426Z"}
+{"level":"info","message":"Connected to MongoDB Atlas","timestamp":"2025-09-24T18:10:40.402Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2025-09-24T18:10:40.409Z"}
+{"level":"info","message":"Inngest endpoint available at http://localhost:3001/api/inngest","timestamp":"2025-09-24T18:10:40.410Z"}
+{"level":"info","message":"Fetched 0 activities for user 68caa1584c7758c290b3b43c today","timestamp":"2025-09-24T18:10:48.107Z"}
+{"level":"info","message":"Fetched 0 activities for user 68caa1584c7758c290b3b43c today","timestamp":"2025-09-24T18:10:48.507Z"}
+{"level":"info","message":"Connected to MongoDB Atlas","timestamp":"2025-09-25T09:38:07.342Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2025-09-25T09:38:07.350Z"}
+{"level":"info","message":"Inngest endpoint available at http://localhost:3001/api/inngest","timestamp":"2025-09-25T09:38:07.350Z"}
+{"level":"info","message":"Connected to MongoDB Atlas","timestamp":"2025-09-25T09:48:25.723Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2025-09-25T09:48:25.731Z"}
+{"level":"info","message":"Inngest endpoint available at http://localhost:3001/api/inngest","timestamp":"2025-09-25T09:48:25.732Z"}
