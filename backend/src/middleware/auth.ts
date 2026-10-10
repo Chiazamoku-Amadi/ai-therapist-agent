@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { IUser, User } from "../models/User";
+import { JWT_SECRET } from "../config/env";
 
 // Extend Express Request interface using module augmentation
 declare module "express-serve-static-core" {
@@ -25,18 +26,8 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
       return res.status(401).json({ message: "Authentication required" });
     }
 
-    // Check if the JWT secret is defined before using it.
-    if (!process.env.JWT_SECRET) {
-      console.error("JWT_SECRET is not defined in the environment variables.");
-      return res.status(500).json({ message: "Server configuration error." });
-    }
-
     // Verify token and extract user ID
-    // Cast the secret to a string because you've already checked for its existence
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET as string
-    ) as JwtPayload;
+    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
 
     // Find the user by ID
     const user = await User.findById(decoded.userId);

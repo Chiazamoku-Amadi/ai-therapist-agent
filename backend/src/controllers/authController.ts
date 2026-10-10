@@ -3,6 +3,7 @@ import { User } from "../models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Session } from "../models/Session";
+import { JWT_SECRET } from "../config/env";
 
 // User registration controller
 export const register = async (req: Request, res: Response) => {
@@ -66,13 +67,9 @@ export const login = async (req: Request, res: Response) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET || "your-secret-key",
-      {
-        expiresIn: "24h",
-      }
-    );
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
+      expiresIn: "24h",
+    });
 
     // Calculates the session expiration for 24 hours from now
     const expiresAt = new Date();
