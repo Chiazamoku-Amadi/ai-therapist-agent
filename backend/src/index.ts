@@ -27,7 +27,7 @@ app.use(
       "http://localhost:3000",
     ],
     credentials: true,
-  })
+  }),
 );
 
 // Security middleware to set various HTTP headers for app security
@@ -42,7 +42,7 @@ app.use(express.json());
 // Serve Inngest functions at the /api/inngest endpoint
 app.use(
   "/api/inngest",
-  serve({ client: inngest, functions: inngestFunctions })
+  serve({ client: inngest, functions: inngestFunctions }),
 );
 
 app.use("/api/auth", authRoutes);
@@ -60,10 +60,11 @@ const startServer = async () => {
     app.listen(PORT, () => {
       logger.info(`Server is running on port ${PORT}`);
       logger.info(
-        `Inngest endpoint available at http://localhost:${PORT}/api/inngest`
+        `Inngest endpoint available at http://localhost:${PORT}/api/inngest`,
       );
     });
   } catch (error) {
+    console.error("Failed to start server:", error);
     logger.error("Failed to start server:", error);
     process.exit(1);
   }
