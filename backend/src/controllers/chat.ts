@@ -9,6 +9,7 @@ import { InngestEvent } from "../types/inngest";
 import { Types } from "mongoose";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.8-flash";
 
 // Create a new chat session
 export const createChatSession = async (req: Request, res: Response) => {
@@ -107,7 +108,7 @@ export const sendMessage = async (req: Request, res: Response) => {
     await inngest.send(event);
 
     // Process the message directly using Gemini
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: MODEL });
 
     // Analyze the message
     const analysisPrompt = `Analyze this therapy message and provide insights. Return ONLY a valid JSON object with no markdown formatting or additional text.
@@ -181,7 +182,7 @@ export const sendMessage = async (req: Request, res: Response) => {
         $push: { messages: { $each: [userMessage, assistantMessage] } }, // Add both messages
         $set: { updatedAt: new Date() },
       },
-      { new: true } // Returns the updated document
+      { new: true }, // Returns the updated document
     );
 
     if (!updatedSession) {

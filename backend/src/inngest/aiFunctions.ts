@@ -4,6 +4,7 @@ import { logger } from "../utils/logger";
 
 // Initialize Gemini API client
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.8-flash";
 
 // Responsible for handling and analysing incoming chat messages utilising the Gemini AI
 export const processChatMessage = inngest.createFunction(
@@ -41,7 +42,7 @@ export const processChatMessage = inngest.createFunction(
       const analysis = await step.run("analyze-message", async () => {
         try {
           const model = genAI.getGenerativeModel({
-            model: "gemini-2.0-flash",
+            model: MODEL,
           });
 
           // Construct the prompt for Gemini AI
@@ -117,7 +118,7 @@ export const processChatMessage = inngest.createFunction(
       // Generates a therapeutic response using Gemini AI
       const response = await step.run("generate-response", async () => {
         try {
-          const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+          const model = genAI.getGenerativeModel({ model: MODEL });
 
           // Construct the prompt for Gemini AI
           // This prompt incorporates the system's initial instructions followed by a request to generate a therapeutic response based on the user's message, the analysis results, the updated memory, and the user's therapy goals
@@ -180,7 +181,7 @@ export const processChatMessage = inngest.createFunction(
         updatedMemory: event.data.memory,
       };
     }
-  }
+  },
 );
 
 // Designed to analyze the content of a therapy session
@@ -198,7 +199,7 @@ export const analyzeTherapySession = inngest.createFunction(
       // Analyze with Gemini AI Sub-step
       // Constructs a detailed prompt for Gemini AI
       const analysis = await step.run("analyze-with-gemini", async () => {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+        const model = genAI.getGenerativeModel({ model: MODEL });
 
         // Construct the prompt for Gemini AI
         const prompt = `Analyze this therapy session and provide insights:
@@ -253,7 +254,7 @@ export const analyzeTherapySession = inngest.createFunction(
       logger.error("Error in therapy session analysis:", error);
       throw error; // Re-throw the error to ensure it can be caught and managed by higher level error handlers in the application
     }
-  }
+  },
 );
 
 // Function to generate personalized activity recommendations
@@ -276,7 +277,7 @@ export const generateActivityRecommendations = inngest.createFunction(
       const recommendations = await step.run(
         "generate-recommendations",
         async () => {
-          const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+          const model = genAI.getGenerativeModel({ model: MODEL });
 
           const prompt = `Based on the following user context, generate personalized activity recommendations:
         User Context: ${JSON.stringify(userContext)}
@@ -295,7 +296,7 @@ export const generateActivityRecommendations = inngest.createFunction(
           const text = response.text();
 
           return JSON.parse(text);
-        }
+        },
       );
 
       // Store the recommendations
@@ -313,7 +314,7 @@ export const generateActivityRecommendations = inngest.createFunction(
       logger.error("Error generating activity recommendations:", error);
       throw error;
     }
-  }
+  },
 );
 
 export const functions = [
