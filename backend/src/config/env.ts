@@ -9,3 +9,4 @@ function requireEnv(name: string): string {
 }
 
 export const JWT_SECRET = requireEnv("JWT_SECRET");
+export const MONGODB_URI = requireEnv("MONGODB_URI");
